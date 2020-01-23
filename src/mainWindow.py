@@ -3,28 +3,32 @@
 #University of Florida
 
 from tkinter import *
-
+from functools import partial
 
 class mainWindow():
     def __init__(self, master):
 
+        #########################################
         #*** creating menu bar ***
+        #########################################
         topMenu_0 = Menu(master)
         master.config(menu=topMenu_0)
 
         #Creating File sub menu ***
         subMenuFile = Menu(topMenu_0)
-        topMenu_0.add_cascade(label="File", menu=subMenuFile)
-        subMenuFile.add_command(label="New Project", command=self.NewProjectFunc)
-        subMenuFile.add_command(label="New...", command=self.NewFunc)
+        topMenu_0.add_cascade(label = "File", menu=subMenuFile)
+        subMenuFile.add_command(label = "New Project", command=self.NewProjectFunc)
+        subMenuFile.add_command(label = "New...", command=self.NewFunc)
         subMenuFile.add_separator()
-        subMenuFile.add_command(label="Exit", command=self.ExitFunc)
+
+        ExitFunction = partial(self.ExitFunc, master)
+        subMenuFile.add_command(label = "Exit", command = ExitFunction)
 
         #Creating Edit sub menu *** 
         subMenuEdit = Menu(topMenu_0)
-        topMenu_0.add_cascade(label="Edit", menu=subMenuEdit)
-        subMenuEdit.add_command(label="Undo", command=self.UndoFunc)
-        subMenuEdit.add_command(label="Redo", command=self.RedoFunc)
+        topMenu_0.add_cascade(label = "Edit", menu=subMenuEdit)
+        subMenuEdit.add_command(label = "Undo", command=self.UndoFunc)
+        subMenuEdit.add_command(label = "Redo", command=self.RedoFunc)
 
 
         #Creating Tool sub menu *** 
@@ -40,6 +44,30 @@ class mainWindow():
         subMenuHelp.add_command(label="About", command=self.AboutFunc)
 
 
+        #########################################
+        # ***** Toolbar *****
+        #########################################
+
+        toolbar = Frame(master,bg="grey")
+        NewButton = Button(toolbar,text="New", command = self.NewFunc)
+        NewButton.pack(side=LEFT, padx=2, pady=2)
+        synthButton = Button(toolbar,text="Synthesis", command = self.RunSynthesis)
+        synthButton.pack(side=LEFT, padx=2, pady=2) 
+        toolbar.pack(side=TOP, fill=X)
+
+
+        #########################################
+        # ***** Main Window for source code *****
+        #########################################
+
+        sourceFrame_0 = Frame(master, width = master.winfo_screenwidth() * 0.4, height = master.winfo_screenheight() * 0.4, bg="#B3B3D3")
+        sourceFrame_0.pack(padx=4, pady=4)
+
+        messageFrame_0 = Frame(master, width = master.winfo_screenwidth() * 0.4, height = master.winfo_screenheight() * 0.2 , bg="#B2BEB5")
+        messageFrame_0.pack(padx=4, pady=4)
+
+
+
 
 #File methods
 
@@ -49,8 +77,9 @@ class mainWindow():
     def NewFunc(self):
         print("running NewFunc")
 
-    def ExitFunc(self):
-        print("running ExitFunc")
+    def ExitFunc(self, master):
+        print("Exiting...")
+        master.destroy()
 
 
 

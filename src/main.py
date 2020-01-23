@@ -14,5 +14,5 @@ import mainWindow
 root = Tk()
 
 mainWindowObj = mainWindow.mainWindow(root)
-
+root.title('MeXT-SE')
 root.mainloop()
