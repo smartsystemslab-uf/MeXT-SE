@@ -4,7 +4,7 @@
 
 from tkinter import *
 from functools import partial
-import messageFrame
+import messageFrame, toolBarFrame
 
 class mainWindow():
     def __init__(self, master):
@@ -19,13 +19,8 @@ class mainWindow():
         #########################################
         # ***** Main Window for source code *****
         #########################################
-
-
         sourceFrame_0 = Frame(master, width = master.winfo_screenwidth() * 0.4, height = master.winfo_screenheight() * 0.4, bg="#B3B3D3")
-        self.messageFrameInterface = messageFrame.messageFrame(master)
-       
 
-        #########################################
 
         #Creating File sub menu ***
         subMenuFile = Menu(topMenu_0)
@@ -61,18 +56,14 @@ class mainWindow():
         # ***** Toolbar *****
         #########################################
 
-        toolbar = Frame(master,bg="grey")
-        NewButton = Button(toolbar,text="New", command = self.NewFunc)
-        NewButton.pack(side=LEFT, padx=2, pady=2)
-        synthButton = Button(toolbar,text="Synthesis", command = self.RunSynthesis)
-        synthButton.pack(side=LEFT, padx=2, pady=2) 
-        toolbar.pack(side=TOP, fill=X)
+        self.toolBarInterface = toolBarFrame.toolBarFrame(master)
+        self.toolBarInterface.bindFunction(self.NewFunc, self.RunSynthesis)
 
 
         #########################################
-        # ***** Packing Window *****
+        # *** Main Window for showing message ***
         #########################################
-
+        self.messageFrameInterface = messageFrame.messageFrame(master)
         sourceFrame_0.pack(padx=4, pady=4)
         self.messageFrameInterface.packFrame()
 
@@ -82,7 +73,8 @@ class mainWindow():
     def NewProjectFunc(self):
         print("running NewProjectFunc")
 
-    def NewFunc(self):
+
+    def NewFunc(self, dummyargs=0):
         print("running NewFunc")
 
     def ExitFunc(self, master):
@@ -104,7 +96,7 @@ class mainWindow():
 
 #Tool methods
 
-    def RunSynthesis(self):
+    def RunSynthesis(self, dummyargs=0):
         self.messageFrameInterface.printMessage("Generating TCL script ...")
         print("Generating TCL script ...")
 
@@ -118,7 +110,6 @@ class mainWindow():
 
     def AboutFunc(self):
         print("running AboutFunc")
-
 
 
 
