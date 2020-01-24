@@ -4,6 +4,7 @@
 
 from tkinter import *
 from functools import partial
+import messageFrame
 
 class mainWindow():
     def __init__(self, master):
@@ -21,7 +22,7 @@ class mainWindow():
 
 
         sourceFrame_0 = Frame(master, width = master.winfo_screenwidth() * 0.4, height = master.winfo_screenheight() * 0.4, bg="#B3B3D3")
-        messageFrame_0 = Frame(master, width = master.winfo_screenwidth() * 0.4, height = master.winfo_screenheight() * 0.2 , bg="#B2BEB5")
+        self.messageFrameInterface = messageFrame.messageFrame(master)
        
 
         #########################################
@@ -33,7 +34,7 @@ class mainWindow():
         subMenuFile.add_command(label = "New...", command=self.NewFunc)
         subMenuFile.add_separator()
 
-        ExitFunction = partial(self.ExitFunc, master, messageFrame_0)
+        ExitFunction = partial(self.ExitFunc, master)
         subMenuFile.add_command(label = "Exit", command = ExitFunction)
 
         #Creating Edit sub menu *** 
@@ -46,8 +47,7 @@ class mainWindow():
         #Creating Tool sub menu *** 
         subMenuTool = Menu(topMenu_0)
         topMenu_0.add_cascade(label="Tool", menu=subMenuTool)
-        RunSynthesisFunction = partial(self.RunSynthesis, messageFrame_0)
-        subMenuTool.add_command(label="Run Synthesis", command=RunSynthesisFunction)
+        subMenuTool.add_command(label="Run Synthesis", command=self.RunSynthesis)
         subMenuTool.add_command(label="Customize...", command=self.Customize)
 
         #Creating Help sub menu *** 
@@ -64,14 +64,17 @@ class mainWindow():
         toolbar = Frame(master,bg="grey")
         NewButton = Button(toolbar,text="New", command = self.NewFunc)
         NewButton.pack(side=LEFT, padx=2, pady=2)
-        synthButton = Button(toolbar,text="Synthesis", command = RunSynthesisFunction)
+        synthButton = Button(toolbar,text="Synthesis", command = self.RunSynthesis)
         synthButton.pack(side=LEFT, padx=2, pady=2) 
         toolbar.pack(side=TOP, fill=X)
 
 
+        #########################################
+        # ***** Packing Window *****
+        #########################################
 
         sourceFrame_0.pack(padx=4, pady=4)
-        messageFrame_0.pack(padx=4, pady=4)
+        self.messageFrameInterface.packFrame()
 
 
 #File methods
@@ -82,10 +85,10 @@ class mainWindow():
     def NewFunc(self):
         print("running NewFunc")
 
-    def ExitFunc(self, master, messageFrame_0):
-        self.printMessage(messageFrame_0, "Exiting")
-        print("Exiting...")
-        #master.destroy()
+    def ExitFunc(self, master):
+        self.messageFrameInterface.printMessage("Exiting ...")
+        print("Exiting ...")
+        master.destroy()
 
 
 
@@ -101,9 +104,9 @@ class mainWindow():
 
 #Tool methods
 
-    def RunSynthesis(self, messageFrame_0):
-        self.printMessage(messageFrame_0, "Run Synthesis")
-        print("Generating TCL script...")
+    def RunSynthesis(self):
+        self.messageFrameInterface.printMessage("Generating TCL script ...")
+        print("Generating TCL script ...")
 
     def Customize(self):
         print("running Customize")
@@ -116,14 +119,6 @@ class mainWindow():
     def AboutFunc(self):
         print("running AboutFunc")
 
-    def printMessage(self, messageFrame_0, msgText):
-        # if you want the button to disappear:
-        # button.destroy() or button.pack_forget()
-        canv = Canvas(messageFrame_0, width=98, height=98, bg="#B2BEB5")
-        canv.grid(row=0, column=0)
-        label = Label(canv, text= msgText, width=94, height=16, bg="#B2BEB5", anchor='nw')
-        #this creates a new label to the GUI
-        label.pack(padx=6,pady=6, fill='both')
 
 
 
