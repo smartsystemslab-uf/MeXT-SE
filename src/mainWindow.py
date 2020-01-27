@@ -4,7 +4,7 @@
 
 from tkinter import *
 from functools import partial
-import messageFrame, toolBarFrame
+import messageFrame, toolBarFrame, statusBarFrame
 
 class mainWindow():
     def __init__(self, master):
@@ -16,10 +16,6 @@ class mainWindow():
         master.config(menu=topMenu_0)
         master.minsize(width=640, height=480)
 
-        #########################################
-        # ***** Main Window for source code *****
-        #########################################
-        sourceFrame_0 = Frame(master, width = master.winfo_screenwidth() * 0.4, height = master.winfo_screenheight() * 0.4, bg="#B3B3D3")
 
 
         #Creating File sub menu ***
@@ -61,21 +57,36 @@ class mainWindow():
 
 
         #########################################
+        # ***** Main Window for source code *****
+        #########################################
+        self.sourceFrame_0 = Frame(master, width = master.winfo_screenwidth() * 0.4, height = master.winfo_screenheight() * 0.4, bg="#B3B3D3")
+        self.sourceFrame_0.pack(padx=4, pady=4)
+
+
+
+        #########################################
         # *** Main Window for showing message ***
         #########################################
         self.messageFrameInterface = messageFrame.messageFrame(master)
-        sourceFrame_0.pack(padx=4, pady=4)
         self.messageFrameInterface.packFrame()
+
+        #########################################
+        # ***            Status Bar           ***
+        #########################################
+        self.statusInfo = statusBarFrame.statusBarFrame(master)
+        
 
 
 #File methods
 
     def NewProjectFunc(self):
         print("running NewProjectFunc")
+        self.messageFrameInterface.printMessage("Creating New Project...")
 
 
     def NewFunc(self, dummyargs=0):
         print("running NewFunc")
+        self.messageFrameInterface.printMessage("Creating New file ...")
 
     def ExitFunc(self, master):
         self.messageFrameInterface.printMessage("Exiting ...")
@@ -102,14 +113,17 @@ class mainWindow():
 
     def Customize(self):
         print("running Customize")
+        self.messageFrameInterface.printMessage("Customizing ...")
 
 #Help methods
 
     def seeTutorialFunc(self):
         print("running seeTutorialFunc")
+        self.messageFrameInterface.printMessage("MeXT-SE tutorial link ...")
 
     def AboutFunc(self):
         print("running AboutFunc")
+        self.messageFrameInterface.printMessage("About MeXT-SE ...")
 
 
 
