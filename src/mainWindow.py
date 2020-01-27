@@ -5,6 +5,8 @@
 from tkinter import *
 from functools import partial
 import messageFrame, toolBarFrame, statusBarFrame
+import generalInfo
+
 
 class mainWindow():
     def __init__(self, master):
@@ -53,7 +55,7 @@ class mainWindow():
         #########################################
 
         self.toolBarInterface = toolBarFrame.toolBarFrame(master)
-        self.toolBarInterface.bindFunction(self.NewFunc, self.RunSynthesis)
+        self.toolBarInterface.bindFunction(self.NewFunc, self.RunSynthesis, self.AddModule)
 
 
         #########################################
@@ -111,6 +113,14 @@ class mainWindow():
         self.messageFrameInterface.printMessage("Generating TCL script ...")
         print("Generating TCL script ...")
 
+
+    def AddModule(self, dummyargs=0):
+        self.messageFrameInterface.printMessage("Adding Module ...")
+        print("Adding new Module ...")
+        
+
+        
+
     def Customize(self):
         print("running Customize")
         self.messageFrameInterface.printMessage("Customizing ...")
@@ -124,6 +134,7 @@ class mainWindow():
     def AboutFunc(self):
         print("running AboutFunc")
         self.messageFrameInterface.printMessage("About MeXT-SE ...")
+        generalInfo.showAboutMessage()
 
 
 

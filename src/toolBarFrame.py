@@ -14,10 +14,12 @@ class toolBarFrame():
         self.NewButton.pack(side=LEFT, padx=2, pady=2)
         self.synthButton = Button(self.toolbar,text="Synthesis")
         self.synthButton.pack(side=LEFT, padx=2, pady=2) 
+        self.AddIPModule = Button(self.toolbar,text="Add IP")
+        self.AddIPModule.pack(side=LEFT, padx=2, pady=2) 
         self.toolbar.pack(side=TOP, fill=X)
 
-    def bindFunction(self, newFunction, synthFunction):
+    def bindFunction(self, newFunction, synthFunction, AddModuleFunction):
         self.NewButton.bind("<Button-1>", newFunction)
-        self.synthButton.bind("<Button-1>", synthFunction)
-        
+        self.synthButton.bind("<Button-1>", synthFunction) 
+        self.AddIPModule.bind("<Button-1>", AddModuleFunction)
 
