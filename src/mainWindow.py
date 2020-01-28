@@ -4,7 +4,7 @@
 
 from tkinter import *
 from functools import partial
-import messageFrame, toolBarFrame, statusBarFrame
+import sourceFrame, messageFrame, toolBarFrame, statusBarFrame
 import generalInfo
 import os
 
@@ -57,31 +57,11 @@ class mainWindow():
         self.toolBarInterface = toolBarFrame.toolBarFrame(master)
         self.toolBarInterface.bindFunction(self.NewFunc, self.RunSynthesis, self.AddModule)
 
-        self.fileList = os.listdir()
-
-
-        #self.fileListFrame_0.pack(side=LEFT, padx=4, pady=4)
 
         #########################################
         # ***** Main Window for source code *****
         #########################################
-        self.sourceFrame_0 = Frame(master, width = master.winfo_screenwidth() * 0.4, height = master.winfo_screenheight() * 0.4, bg="#B3B3D3")
-        self.sourceFrame_0.pack_propagate(0)
-        self.sourceFrame_0.pack(padx=4, pady=4)
-
-        self.LeftFrame = Canvas(self.sourceFrame_0, width=master.winfo_screenwidth() * 0.1, height=master.winfo_screenheight() * 0.4, bg="#C2BEB0")
-        self.LeftFrame.grid(row=0, column=0)
-        self.LeftFrame.pack_propagate(0)
-        self.RightFrame = Canvas(self.sourceFrame_0, width=master.winfo_screenwidth() * 0.3, height=master.winfo_screenheight() * 0.4, bg="#B3B3D3")
-        self.RightFrame.grid(row=0, column=1)
-        self.RightFrame.pack_propagate(0)
-
-
-        self.listBox = Listbox(self.LeftFrame, height=27, bg="#C2BEB0")
-        self.listBox.pack(fill='both')
-        
-        for item in self.fileList:
-            self.listBox.insert(END, item)
+        self.sourceFrame_0 = sourceFrame.sourceFrame(master)
 
         #########################################
         # *** Main Window for showing message ***
