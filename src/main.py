@@ -19,6 +19,7 @@ root = Tk()
 
 mainWindowObj = mainWindow.mainWindow(root)
 root.title('MeXT-SE')
+#root.geometry("640x480")
 root.call('wm', 'iconphoto', root._w, ImageTk.PhotoImage(file='../images/mext-se.png'))
 
 
