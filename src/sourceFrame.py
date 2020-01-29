@@ -8,9 +8,16 @@ import os
 import messageFrame, toolBarFrame, statusBarFrame
 import generalInfo
 import os
+from PIL import ImageTk, Image
+from tkinter import filedialog
 
 class sourceFrame():
     def __init__(self, master):
+
+        LoadImage = Image.open("../images/add-document.png")
+        LoadImage = LoadImage.resize((25, 25), Image.ANTIALIAS)
+        self.LoadPhoto = ImageTk.PhotoImage(LoadImage)
+
 
         self.fileList = os.listdir("../")
 
@@ -33,7 +40,30 @@ class sourceFrame():
             self.listBox.insert(END, item)
 
         # Source Design Window
-        self.RightFrame = Canvas(self.sourceFrame_0, width=master.winfo_screenwidth() * 0.3, height=master.winfo_screenheight() * 0.4, bg="#B3B3D3")
+        self.RightFrame = Frame(self.sourceFrame_0, width=master.winfo_screenwidth() * 0.3, height=master.winfo_screenheight() * 0.4, bg="#B3B3D3")
         self.RightFrame.grid(row=0, column=1)
         self.RightFrame.pack_propagate(0)
+        
+        self.RightTopFrame = Frame(self.RightFrame, width= master.winfo_screenwidth() * 0.3, height=32, bg="#B3B3B3")
+        self.RightTopFrame.pack(side=TOP, fill=X)
+        self.RightTopFrame.pack_propagate(0)
+
+        self.RightLabel_0 = Label(self.RightTopFrame, text= "Design Window", font=("Courier", 14), bg="#B3B3C2", anchor='center')
+        self.RightLabel_0.grid(row=0, column=0)
+
+        self.AddDesign = Button(self.RightTopFrame, image=self.LoadPhoto, command = self.fileBrowser)
+        self.AddDesign.grid(row=0, column=1, padx=(4, 4), pady=(4, 4))
+
+
+        self.RightBottomFrame = Frame(self.RightFrame, width= master.winfo_screenwidth() * 0.3, height=400, bg="#B3B3D0")
+        self.RightBottomFrame.pack(fill='both')
+
+
+
+    def fileBrowser(self):
+        self.filename = filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+        self.PathLabel = Label(self.RightBottomFrame, text = "")
+        self.PathLabel.grid(column = 1, row = 2)
+        self.PathLabel.configure(text = self.filename)
+        print("Open file ",self.filename)
 
