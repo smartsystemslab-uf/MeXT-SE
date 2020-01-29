@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SystemDescription SYSTEM "abstract.dtd">
+
+<SystemDescription name="System1">
+  <CPU task="standalone" name="mb0">
+    <CommInterface>ilmb</CommInterface>
+  </CPU>
+  <Memory name="bram">
+    <CommInterface>ilmb</CommInterface>
+  </Memory>
+  <CommMedium type="bus" name="ilmb" />
+</SystemDescription>
+
+
+
+
+
+

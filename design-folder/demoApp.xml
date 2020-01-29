@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE SystemDescription SYSTEM "abstract.dtd">
+
+<SystemDescription name="System1">
+  <CPU name="CPU1" task="send PING packets">
+    <CommInterface>OPB</CommInterface>
+    <CommInterface>FSL1</CommInterface>
+    <CommInterface>FSL2</CommInterface>
+    <CommInterface>ilmb</CommInterface>
+    <CommInterface>dlmb</CommInterface>
+  </CPU>
+  <CPU name="CPU2" task="reply with PONG packets">
+    <CommInterface>OPB</CommInterface>
+    <CommInterface>FSL1</CommInterface>
+    <CommInterface>FSL2</CommInterface>
+    <CommInterface>ilmb2</CommInterface>
+    <CommInterface>dlmb2</CommInterface>
+  </CPU>
+  <CommMedium name="OPB" type="bus" />
+  <CommMedium name="FSL1" type="link" />
+  <CommMedium name="FSL2" type="link" />
+  <CommMedium name="ilmb" type="bus" />
+  <CommMedium name="dlmb" type="bus" />
+  <CommMedium name="ilmb2" type="bus" />
+  <CommMedium name="dlmb2" type="bus" />
+  <Memory name="RAM">
+    <CommInterface>ilmb</CommInterface>
+    <CommInterface>dlmb</CommInterface>
+  </Memory>
+  <Memory name="RAM2">
+    <CommInterface>dlmb2</CommInterface>
+    <CommInterface>ilmb2</CommInterface>
+  </Memory>
+  <Periphery name="UART">
+    <CommInterface>OPB</CommInterface>
+  </Periphery>
+  <Periphery name="LEDs">
+    <CommInterface>OPB</CommInterface>
+  </Periphery>
+</SystemDescription>
+

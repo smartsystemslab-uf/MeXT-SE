@@ -19,7 +19,7 @@ class sourceFrame():
         self.LoadPhoto = ImageTk.PhotoImage(LoadImage)
 
 
-        self.fileList = os.listdir("../")
+        self.fileList = os.listdir("../design-folder/")
 
         self.sourceFrame_0 = Frame(master, width = master.winfo_screenwidth() * 0.4, height = master.winfo_screenheight() * 0.4, bg="#B3B3D3")
         self.sourceFrame_0.pack_propagate(0)
@@ -61,7 +61,7 @@ class sourceFrame():
 
 
     def fileBrowser(self):
-        self.filename = filedialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+        self.filename = filedialog.askopenfilename(initialdir = "../",title = "Select file",filetypes = (("design files","*.xml"),("all files","*.*")))
         self.PathLabel = Label(self.RightBottomFrame, text = "")
         self.PathLabel.grid(column = 1, row = 2)
         self.PathLabel.configure(text = self.filename)
