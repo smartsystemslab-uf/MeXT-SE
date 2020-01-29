@@ -18,7 +18,7 @@ class sourceFrame():
         self.sourceFrame_0.pack_propagate(0)
         self.sourceFrame_0.pack(padx=4, pady=4)
 
-
+        #Directory Window
         self.LeftFrame = Canvas(self.sourceFrame_0, width=master.winfo_screenwidth() * 0.1, height=master.winfo_screenheight() * 0.4, bg="#C2BEB0")
         self.LeftFrame.grid(row=0, column=0)
         self.LeftFrame.pack_propagate(0) 
@@ -26,13 +26,14 @@ class sourceFrame():
         self.LeftLabel_0.pack(padx=4, pady=4)
 
 
-        self.RightFrame = Canvas(self.sourceFrame_0, width=master.winfo_screenwidth() * 0.3, height=master.winfo_screenheight() * 0.4, bg="#B3B3D3")
-        self.RightFrame.grid(row=0, column=1)
-        self.RightFrame.pack_propagate(0)
-
-
         self.listBox = Listbox(self.LeftFrame, height=27, bg="#C2BEB0")
         self.listBox.pack(padx=4, pady=4, fill='both')
         
         for item in self.fileList:
             self.listBox.insert(END, item)
+
+        # Source Design Window
+        self.RightFrame = Canvas(self.sourceFrame_0, width=master.winfo_screenwidth() * 0.3, height=master.winfo_screenheight() * 0.4, bg="#B3B3D3")
+        self.RightFrame.grid(row=0, column=1)
+        self.RightFrame.pack_propagate(0)
+

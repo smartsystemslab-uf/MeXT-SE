@@ -18,8 +18,6 @@ class mainWindow():
         master.config(menu=topMenu_0)
         master.minsize(width=640, height=480)
 
-
-
         #Creating File sub menu ***
         subMenuFile = Menu(topMenu_0)
         topMenu_0.add_cascade(label = "File", menu=subMenuFile)
