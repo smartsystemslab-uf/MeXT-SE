@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE SystemDescription SYSTEM "abstract.dtd">
 
-<SystemDescription name="System1">
-  <CPU task="standalone" name="mb0">
-    <CommInterface>ilmb</CommInterface>
+<SystemDescription name="Xilinx zynq-7020">
+  <CPU task="standalone" name="zynq">
+    <CPUConfig>DDR</CPUConfig>
   </CPU>
-  <Memory name="bram">
-    <CommInterface>ilmb</CommInterface>
+  <Memory name="bram" mode="controller">
+    <MemoryConfig>Single Port</MemoryConfig>
   </Memory>
-  <CommMedium type="bus" name="ilmb" />
+  <CommMedium type="bus">axi</CommMedium>
 </SystemDescription>
 
 
