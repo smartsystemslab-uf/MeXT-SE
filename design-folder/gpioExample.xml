@@ -4,7 +4,7 @@
   <CPU task="standalone" name="zynq">
     <CPUConfig>DDR</CPUConfig>
   </CPU>
-  <IP name="GPIO" task="input" width="32">
+  <IP name="GPIO" task="input" width="32-bit">
   </IP>
   <CommMedium type="bus">axi</CommMedium>
 </SystemDescription>

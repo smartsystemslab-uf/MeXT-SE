@@ -113,7 +113,7 @@ def parseFile(filePath):
     ipIndex = 0
 
     if ipData:
-        for item in memData:
+        for item in ipData:
             ipTag = "ipcore_"+ str(ipIndex)
             systemList.append([ipTag])
             ipIndex = ipIndex + 1
@@ -124,9 +124,12 @@ def parseFile(filePath):
             systemList[treeIndex].append(itemBuffer)
 
             #(i.e. standalone/controller)
-            itemBuffer = (item.getAttribute("mode"))
+            itemBuffer = (item.getAttribute("task"))
             systemList[treeIndex].append(itemBuffer)
 
+            itemBuffer = (item.getAttribute("width"))
+            if itemBuffer:
+                systemList[treeIndex].append(itemBuffer)
 
             #placeholder for future IP configuration
             itemBuffer = (item.getAttribute("ipconfig"))
@@ -142,8 +145,6 @@ def parseFile(filePath):
     ####################################################
     comConfig = doc.getElementsByTagName("CommMedium")
     comConfData = getText(comConfig[0].childNodes)
-
-
 
     return systemList, cpuConfList, memConfList, comConfData
 

@@ -80,4 +80,4 @@ class DesignTree():
         if comConfData:
             moduleBuffer = self.tree.insert("","end", text=comConfData, image = self.greenPhoto, values=("","BUS"))
             self.treeInfo.append(moduleBuffer)
-        self.tree.grid(column = 0, row = 3, padx=(8, 8))
+        self.tree.grid(column = 0, row = 3, padx=(8, 8), pady=(2,2))
