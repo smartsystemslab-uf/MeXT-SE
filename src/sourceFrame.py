@@ -3,6 +3,8 @@
 #University of Florida
 
 from tkinter import *
+#from tkinter.ttk import *
+import xml.dom.minidom
 from functools import partial
 import os
 import messageFrame, toolBarFrame, statusBarFrame
@@ -10,6 +12,7 @@ import generalInfo
 import os
 from PIL import ImageTk, Image
 from tkinter import filedialog
+import IPparse, DesignTree
 
 class sourceFrame():
     def __init__(self, master):
@@ -57,13 +60,17 @@ class sourceFrame():
 
         self.RightBottomFrame = Frame(self.RightFrame, width= master.winfo_screenwidth() * 0.3, height=400, bg="#B3B3D0")
         self.RightBottomFrame.pack(fill='both')
+        self.treeData = DesignTree.DesignTree(self.RightBottomFrame)
 
 
 
     def fileBrowser(self):
         self.filename = filedialog.askopenfilename(initialdir = "../",title = "Select file",filetypes = (("design files","*.xml"),("all files","*.*")))
-        self.PathLabel = Label(self.RightBottomFrame, text = "")
-        self.PathLabel.grid(column = 1, row = 2)
-        self.PathLabel.configure(text = self.filename)
-        print("Open file ",self.filename)
+        print("Open file ", self.filename)
+        self.treeData.generateTree(self.filename)
+        
+
+
+       
+
 
