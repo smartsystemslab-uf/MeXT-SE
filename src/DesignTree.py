@@ -21,8 +21,16 @@ class DesignTree():
         self.tree.heading("two", text="info",anchor=W)
 
         greenImage = Image.open("../images/greenButton.png")
-        greenImage = greenImage.resize((15, 15), Image.ANTIALIAS)
+        greenImage = greenImage.resize((12, 12), Image.ANTIALIAS)
         self.greenPhoto = ImageTk.PhotoImage(greenImage)
+
+        infoImage = Image.open("../images/info.png")
+        infoImage = infoImage.resize((14, 14), Image.ANTIALIAS)
+        self.infoPhoto = ImageTk.PhotoImage(infoImage)
+
+        paramImage = Image.open("../images/param.png")
+        paramImage = paramImage.resize((10, 10), Image.ANTIALIAS)
+        self.paramPhoto = ImageTk.PhotoImage(paramImage)
 
     def generateTree(self, filePath):
 
@@ -30,8 +38,8 @@ class DesignTree():
 
         # Level 1
         self.treeInfo= []
-        vendorInfo = self.tree.insert("", 1, text=str(systemData[0][0]), values=("","vendor Info"))
-        boardInfo = self.tree.insert("", 2, text=str(systemData[1][0]),values=("","board Info"))
+        vendorInfo = self.tree.insert("", 1, text=str(systemData[0][0]), image = self.infoPhoto, values=("","vendor Info"))
+        boardInfo = self.tree.insert("", 2, text=str(systemData[1][0]), image = self.infoPhoto, values=("","board Info"))
 
         self.treeInfo.append(vendorInfo)
         self.treeInfo.append(boardInfo)
@@ -52,16 +60,16 @@ class DesignTree():
                 cpuConfig = self.tree.insert(self.treeInfo[i], "end", text="cpuconfig", values=("","customize"))
 
                 for j in range(len(cpuConfList)):
-                    self.tree.insert(cpuConfig, "end", text=cpuConfList[j], values=("",""))
+                    self.tree.insert(cpuConfig, "end", text=cpuConfList[j], image = self.paramPhoto, values=("",""))
             #Adding Memory Configuration information
             elif "memory" in str(systemData[i][0]) and memConfList:
                 memConfig = self.tree.insert(self.treeInfo[i], "end", text="memconfig", values=("","customize"))
                 for j in range(len(memConfList)):
-                    self.tree.insert(memConfig, "end", text=memConfList[j], values=("",""))
+                    self.tree.insert(memConfig, "end", text=memConfList[j], image = self.paramPhoto, values=("",""))
 
 
             for k in range(1, len(systemData[i])):
-                self.tree.insert(self.treeInfo[i], "end", text=systemData[i][k], values=("",""))
+                self.tree.insert(self.treeInfo[i], "end", text=systemData[i][k], image = self.paramPhoto, values=("",""))
 
 
         #Adding Communication configuration
