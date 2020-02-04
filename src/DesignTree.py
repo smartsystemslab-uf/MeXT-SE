@@ -1,3 +1,7 @@
+#MeXT-SE software source code
+#author: Md Jubaer Hossain Pantho
+#University of Florida
+
 from tkinter import *
 from tkinter.ttk import *
 import xml.dom.minidom

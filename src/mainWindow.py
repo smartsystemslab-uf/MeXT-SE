@@ -7,6 +7,7 @@ from functools import partial
 import sourceFrame, messageFrame, toolBarFrame, statusBarFrame
 import generalInfo
 import os
+import logicEngine
 
 class mainWindow():
     def __init__(self, master):
@@ -107,6 +108,11 @@ class mainWindow():
     def RunSynthesis(self, dummyargs=0):
         self.messageFrameInterface.printMessage("Generating TCL script ...")
         print("Generating TCL script ...")
+        try:
+            logicEngine.assembleTree(self.sourceFrame_0.filename)
+        except:
+            self.messageFrameInterface.printMessage("XML file not found ...")
+            print("XML file not found ...")
 
 
     def AddModule(self, dummyargs=0):
