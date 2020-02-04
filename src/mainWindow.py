@@ -85,6 +85,10 @@ class mainWindow():
     def NewFunc(self, dummyargs=0):
         print("running NewFunc")
         self.messageFrameInterface.printMessage("Creating New file ...")
+        try:
+            self.sourceFrame_0.treeData.deletePrevousEntry()
+        except:    
+            self.messageFrameInterface.printMessage("Error: Unknown type...")
 
     def ExitFunc(self, master):
         self.messageFrameInterface.printMessage("Exiting ...")
@@ -112,7 +116,7 @@ class mainWindow():
             logicEngine.assembleTree(self.sourceFrame_0.filename)
         except:
             self.messageFrameInterface.printMessage("XML file not found ...")
-            print("XML file not found ...")
+            print("Error: XML file not found ...")
 
 
     def AddModule(self, dummyargs=0):

@@ -13,6 +13,18 @@ class DesignTree():
     def __init__(self, master):
     
         self.tree = Treeview(master, height=30)
+
+
+    def deletePrevousEntry(self):
+        nodes = self.tree.get_children()
+
+        for item in nodes:
+            self.tree.delete(item)
+
+
+    def generateTree(self, filePath):
+        self.deletePrevousEntry()
+
         Style().configure("Treeview", background="#B3B3D0", font=(None, 12), foreground="black", fieldbackground="#B3B3D0")
 
         self.tree["columns"]=("one","two")
@@ -35,8 +47,6 @@ class DesignTree():
         paramImage = Image.open("../images/param.png")
         paramImage = paramImage.resize((10, 10), Image.ANTIALIAS)
         self.paramPhoto = ImageTk.PhotoImage(paramImage)
-
-    def generateTree(self, filePath):
 
         systemData, cpuConfList, memConfList, comConfData = IPparse.parseFile(filePath)
 

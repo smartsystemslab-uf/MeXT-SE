@@ -65,10 +65,14 @@ class sourceFrame():
 
 
     def fileBrowser(self):
-        self.filename = filedialog.askopenfilename(initialdir = "../",title = "Select file",filetypes = (("design files","*.xml"),("all files","*.*")))
-        print("Open file ", self.filename)
-        self.treeData.generateTree(self.filename)
-        
+        try:
+            self.filename = filedialog.askopenfilename(initialdir = "../",title = "Select file",filetypes = (("design files","*.xml"),("all files","*.*")))
+
+            print("Open file ", self.filename)
+            self.treeData.generateTree(self.filename)
+        except:
+            print("Error: File path not given")
+    
 
 
        
