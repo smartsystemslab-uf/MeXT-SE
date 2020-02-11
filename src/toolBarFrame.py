@@ -4,9 +4,10 @@
 
 from tkinter import *
 from functools import partial
-import mainWindow
+import mainWindow, policyScript
+import os
 from PIL import ImageTk, Image
-
+from tkinter import filedialog
 
 class toolBarFrame():
     def __init__(self, master):
@@ -26,7 +27,19 @@ class toolBarFrame():
         sheildImage = sheildImage.resize((25, 25), Image.ANTIALIAS)
         self.sheildPhoto = ImageTk.PhotoImage(sheildImage)
 
+        policyFileImage = Image.open("../images/policy-file.png")
+        policyFileImage = policyFileImage.resize((25, 25), Image.ANTIALIAS)
+        self.policyFilePhoto = ImageTk.PhotoImage(policyFileImage)
 
+        addPolicyImage = Image.open("../images/add-poilcy.png")
+        addPolicyImage = addPolicyImage.resize((25, 25), Image.ANTIALIAS)
+        self.addPolicyPhoto = ImageTk.PhotoImage(addPolicyImage)
+
+        ruleGenImage = Image.open("../images/verified.png")
+        ruleGenImage = ruleGenImage.resize((25, 25), Image.ANTIALIAS)
+        self.ruleGenPhoto = ImageTk.PhotoImage(ruleGenImage)
+
+        self.filename = ""
         self.securityFlag = 0
         self.securityStatus = StringVar()
         self.securityStatus.set("Sheild OFF")
@@ -42,6 +55,15 @@ class toolBarFrame():
         self.AddIPModule = Button(self.toolbar, image = self.plusPhoto)
         self.AddIPModule.pack(side=LEFT, padx=2, pady=2) 
        
+        self.policyFileButton = Button(self.toolbar, image = self.policyFilePhoto, bg="#EFE3D0")
+        self.policyFileButton.pack(side=LEFT, padx=2, pady=2)
+
+        self.ruleGenButton = Button(self.toolbar, image = self.ruleGenPhoto)
+        self.ruleGenButton.pack(side=LEFT, padx=2, pady=2)
+
+        self.addPolicyButton = Button(self.toolbar, image = self.addPolicyPhoto, bg="#EFCED0")
+        self.addPolicyButton.pack(side=LEFT, padx=2, pady=2)
+
         self.secureButton = Button(self.toolbar, image = self.sheildPhoto)
         self.secureButton.pack(side=LEFT, padx=2, pady=2)
         self.secureLabel = Label(self.toolbar, textvariable=self.securityStatus)
@@ -55,6 +77,10 @@ class toolBarFrame():
         self.AddIPModule.bind("<Button-1>", AddModuleFunction)
         self.secureButton.bind("<Button-1>", self.securityEnable)
 
+        self.policyFileButton.bind("<Button-1>", self.policyFileBrowser)
+        self.ruleGenButton.bind("<Button-1>", self.generatePolicyScipt)
+        self.addPolicyButton.bind("<Button-1>", self.AddNewPolicy)
+
     def securityEnable(self, dummyargs=0):
         if self.securityFlag == 0:
             self.securityStatus.set("Sheild  ON")
@@ -62,4 +88,33 @@ class toolBarFrame():
         else:
             self.securityFlag = 0
             self.securityStatus.set("Sheild OFF")
+
+    def policyFileBrowser(self, dummyargs=0):
+        print("Adding policy File")
+        try:
+            self.filename = filedialog.askopenfilename(initialdir = "../policy-folder/",title = "Select file",filetypes = (("design files","*.te"),("all files","*.*")))
+
+            print("Added Policy file ", self.filename)
+        except:
+            print("Error: File path not given")
+
+    def generatePolicyScipt(self, dummyargs=0):
+        if self.filename == "":
+            print("No Policy file was given...")
+        else:
+            print("Generating Policy Script...")
+            print("Policy file :", self.filename)
+            policyScript.GenPolicyScript(self.filename)
+
+
+
+
+    def AddNewPolicy(self, dummyargs=0):
+        if self.filename == "":
+            print("No Policy file was given...")
+        else:
+            print("Adding New Policy to ", self.filename)
+
+
+
 

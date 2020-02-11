@@ -22,7 +22,7 @@ class mainWindow():
         #Creating File sub menu ***
         subMenuFile = Menu(topMenu_0)
         topMenu_0.add_cascade(label = "File", menu=subMenuFile)
-        subMenuFile.add_command(label = "New Project", command=self.NewProjectFunc)
+        subMenuFile.add_command(label = "New Project      ", command=self.NewProjectFunc)
         subMenuFile.add_command(label = "New...", command=self.NewFunc)
         subMenuFile.add_separator()
 
@@ -32,20 +32,25 @@ class mainWindow():
         #Creating Edit sub menu *** 
         subMenuEdit = Menu(topMenu_0)
         topMenu_0.add_cascade(label = "Edit", menu=subMenuEdit)
-        subMenuEdit.add_command(label = "Undo", command=self.UndoFunc)
-        subMenuEdit.add_command(label = "Redo", command=self.RedoFunc)
+        subMenuEdit.add_command(label = "Undo      ", command=self.UndoFunc)
+        subMenuEdit.add_command(label = "Redo   ", command=self.RedoFunc)
 
 
         #Creating Tool sub menu *** 
         subMenuTool = Menu(topMenu_0)
         topMenu_0.add_cascade(label="Tool", menu=subMenuTool)
         subMenuTool.add_command(label="Run Synthesis", command=self.RunSynthesis)
-        subMenuTool.add_command(label="Customize...", command=self.Customize)
+
+        subMenuTool.add_separator()
+        subMenuTool.add_command(label="Add Policy File...", command=self.AddFilePolcy)
+        subMenuTool.add_command(label="Add New Rule...", command=self.AddNewRule)
+        subMenuTool.add_command(label="Generate Policy Script...  ", command=self.GenPolicyScript)
+
 
         #Creating Help sub menu *** 
         subMenuHelp = Menu(topMenu_0)
         topMenu_0.add_cascade(label="Help", menu=subMenuHelp)
-        subMenuHelp.add_command(label="See Tutorial", command=self.seeTutorialFunc)
+        subMenuHelp.add_command(label="See Tutorial      ", command=self.seeTutorialFunc)
         subMenuHelp.add_command(label="About", command=self.AboutFunc)
 
 
@@ -126,9 +131,19 @@ class mainWindow():
 
         
 
-    def Customize(self):
-        print("running Customize")
-        self.messageFrameInterface.printMessage("Customizing ...")
+    def AddFilePolcy(self):
+        print("Adding Policy File...")
+        self.messageFrameInterface.printMessage("Adding Policy File...")
+        self.toolBarInterface.policyFileBrowser()
+
+    def AddNewRule(self):
+        print("Adding New Rule...")
+        self.messageFrameInterface.printMessage("Adding New Rule...")
+
+    def GenPolicyScript(self):
+        print("Generate Policy Script...")
+        self.messageFrameInterface.printMessage("Generate Policy Script...")
+        self.toolBarInterface.generatePolicyScipt()
 
 #Help methods
 
