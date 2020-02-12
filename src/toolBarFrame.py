@@ -114,7 +114,34 @@ class toolBarFrame():
             print("No Policy file was given...")
         else:
             print("Adding New Policy to ", self.filename)
+            self.policyWin = Toplevel()
+            self.policyWin.wm_title("New Security Rule...")
 
+            self.subLabel = Label(self.policyWin, text="Subject : ")
+            self.subLabel.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
+            self.subEntry = Entry(self.policyWin)
+            self.subEntry.grid(row=0, column=1, padx=(10, 10), pady=(10, 10))
 
+            self.objLabel = Label(self.policyWin, text="Object : ")
+            self.objLabel.grid(row=1, column=0, padx=(10, 10), pady=(10, 10))
+            self.objEntry = Entry(self.policyWin)
+            self.objEntry.grid(row=1, column=1, padx=(10, 10), pady=(10, 10))
 
+            self.raccess = IntVar()
+            Checkbutton(self.policyWin, text=" read ", variable= self.raccess).grid(row=2, column=1, sticky=W)
+
+            self.waccess = IntVar()
+            Checkbutton(self.policyWin, text=" write ", variable= self.waccess).grid(row=3, column=1, sticky=W)
+
+            self.xacess = IntVar()
+            Checkbutton(self.policyWin, text=" execute ", variable= self.xacess).grid(row=4, column=1, sticky=W)
+
+            addRuleButton = Button(self.policyWin, text="Add Rule", command = self.WriteRuleToFile)
+            addRuleButton.grid(row=5, column=1, padx=(10, 10), pady=(10, 10), sticky=SE)
+            
+
+    def WriteRuleToFile(self):
+        subjectData = self.subEntry.get()
+        objectData = self.objEntry.get()
+        self.policyWin.destroy()
 
