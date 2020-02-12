@@ -139,6 +139,7 @@ class mainWindow():
     def AddNewRule(self):
         print("Adding New Rule...")
         self.messageFrameInterface.printMessage("Adding New Rule...")
+        self.toolBarInterface.AddNewPolicy()
 
     def GenPolicyScript(self):
         print("Generate Policy Script...")

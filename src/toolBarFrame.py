@@ -39,6 +39,9 @@ class toolBarFrame():
         ruleGenImage = ruleGenImage.resize((25, 25), Image.ANTIALIAS)
         self.ruleGenPhoto = ImageTk.PhotoImage(ruleGenImage)
 
+
+
+        self.policyIndex = 100
         self.filename = ""
         self.securityFlag = 0
         self.securityStatus = StringVar()
@@ -118,30 +121,48 @@ class toolBarFrame():
             self.policyWin.wm_title("New Security Rule...")
 
             self.subLabel = Label(self.policyWin, text="Subject : ")
-            self.subLabel.grid(row=0, column=0, padx=(10, 10), pady=(10, 10))
+            self.subLabel.grid(row=0, column=0, padx=(10, 10), pady=(8, 8))
             self.subEntry = Entry(self.policyWin)
-            self.subEntry.grid(row=0, column=1, padx=(10, 10), pady=(10, 10))
+            self.subEntry.grid(row=0, column=1, padx=(10, 10), pady=(8, 8))
 
             self.objLabel = Label(self.policyWin, text="Object : ")
-            self.objLabel.grid(row=1, column=0, padx=(10, 10), pady=(10, 10))
+            self.objLabel.grid(row=1, column=0, padx=(10, 10), pady=(8, 8))
             self.objEntry = Entry(self.policyWin)
-            self.objEntry.grid(row=1, column=1, padx=(10, 10), pady=(10, 10))
+            self.objEntry.grid(row=1, column=1, padx=(10, 10), pady=(8, 8))
+            
+            self.classLabel = Label(self.policyWin, text="Class : ")
+            self.classLabel.grid(row=2, column=0, padx=(10, 10), pady=(8, 8))
+            self.classEntry = Entry(self.policyWin)
+            self.classEntry.grid(row=2, column=1, padx=(10, 10), pady=(8, 8))
+
+            self.comLabel = Label(self.policyWin, text="Command : ")
+            self.comLabel.grid(row=3, column=0, padx=(10, 10), pady=(8, 8))
+            self.comEntry = Entry(self.policyWin)
+            self.comEntry.grid(row=3, column=1, padx=(10, 10), pady=(8, 8))
+
 
             self.raccess = IntVar()
-            Checkbutton(self.policyWin, text=" read ", variable= self.raccess).grid(row=2, column=1, sticky=W)
+            Checkbutton(self.policyWin, text=" read ", variable= self.raccess).grid(row = 4, column=1, sticky=W)
 
             self.waccess = IntVar()
-            Checkbutton(self.policyWin, text=" write ", variable= self.waccess).grid(row=3, column=1, sticky=W)
+            Checkbutton(self.policyWin, text=" write ", variable= self.waccess).grid(row = 5, column=1, sticky=W)
 
             self.xacess = IntVar()
-            Checkbutton(self.policyWin, text=" execute ", variable= self.xacess).grid(row=4, column=1, sticky=W)
+            Checkbutton(self.policyWin, text=" execute ", variable= self.xacess).grid(row = 6, column=1, sticky=W)
 
             addRuleButton = Button(self.policyWin, text="Add Rule", command = self.WriteRuleToFile)
-            addRuleButton.grid(row=5, column=1, padx=(10, 10), pady=(10, 10), sticky=SE)
+            addRuleButton.grid(row=7, column=1, padx=(10, 10), pady=(10, 10), sticky=SE)
             
 
     def WriteRuleToFile(self):
         subjectData = self.subEntry.get()
         objectData = self.objEntry.get()
+        classData = self.classEntry.get()
+        commandData = self.comEntry.get()
+
+        policyScript.AddNewRuleToFile(self.filename, subjectData, objectData, classData, commandData, self.raccess.get(), self.waccess.get(), self.xacess.get(), self.policyIndex)
+
+        self.policyIndex = self.policyIndex + 1
+
         self.policyWin.destroy()
 
