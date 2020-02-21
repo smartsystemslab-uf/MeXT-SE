@@ -118,7 +118,8 @@ class mainWindow():
         self.messageFrameInterface.printMessage("Generating TCL script ...")
         print("Generating TCL script ...")
         try:
-            logicEngine.assembleTree(self.sourceFrame_0.filename)
+            logicEngine.assembleTree(self.sourceFrame_0.filename, self.toolBarInterface.securityFlag)
+                
         except:
             self.messageFrameInterface.printMessage("XML file not found ...")
             print("Error: XML file not found ...")
