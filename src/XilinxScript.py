@@ -4,6 +4,7 @@
 
 def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath):
     print("Generating script for Xilinx FPGA")
+    print(systemData)
 
     tclFile = open(filePath[:-3] + "tcl", "w")
     projectDir = filePath.split('/')
@@ -17,7 +18,9 @@ def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath
     if (systemData[1][0] == "zynq-7010"):
         tclFile.write("set_property board_part digilentinc.com:zybo-z7-10:part0:1.0 [current_project]\n")
         tclFile.write("update_ip_catalog\n\n")
-    #elif(systemData[1][0] == "put new board information"):
+    elif(systemData[1][0] == "zynq-7020"):
+        tclFile.write("set_property board_part digilentinc.com:zybo-z7-20:part0:1.0 [current_project]\n")
+        tclFile.write("update_ip_catalog\n\n")
     else:
         print("INFO: Unknown board file")
         exit(-1)
@@ -58,6 +61,22 @@ def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath
 
                     if (comConfData == "axi"):
                         tclFile.write("apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {Auto} Clk_slave {Auto} Clk_xbar {Auto} Master {/processing_system7_0/M_AXI_GP0} Slave {/axi_bram_ctrl_0/S_AXI} intc_ip {Auto} master_apm {0}}  [get_bd_intf_pins axi_bram_ctrl_0/S_AXI]\n\n")
+
+
+            elif ("ipcore" in item[0]):
+                if ("GPIO" in item):
+                    tclFile.write("startgroup\n")
+                    tclFile.write("create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio:2.0 axi_gpio_0\n")
+                    tclFile.write("endgroup\n\n")
+
+                    if ("input" in item):
+                        widthSize = item[3]
+                        widthSize = widthSize[:-4]
+                        tclFile.write("set_property -dict [list CONFIG.C_GPIO_WIDTH {" + widthSize + "}] [get_bd_cells axi_gpio_0]\n\n")
+                    tclFile.write("apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {Auto} Clk_slave {Auto} Clk_xbar {Auto} Master {/processing_system7_0/M_AXI_GP0} Slave {/axi_gpio_0/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_gpio_0/S_AXI]\n\n")               
+
+
+                    tclFile.write("apply_bd_automation -rule xilinx.com:bd_rule:board -config { Board_Interface {Custom} Manual_Source {Auto}}  [get_bd_intf_pins axi_gpio_0/GPIO]\n\n")
 
 
     tclFile.write("validate_bd_design -force\n")
