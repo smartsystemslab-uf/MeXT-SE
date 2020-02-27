@@ -120,6 +120,11 @@ class toolBarFrame():
             self.policyWin = Toplevel()
             self.policyWin.wm_title("New Security Rule...")
 
+            print("\n[Suggestion:]\n")
+            print("Policy_name: This is policy module name\nSecurity_Context: This should be the security context string\n\nCommand: allow, neverallow, audit2allow, dontaudit")
+            print("Class: file, process, accelerator\nPerms: open, read, write, execute\n\n")
+            print("The following is an example.\n\npolicy_module(mypolicy,1.0)\ngen_require(`\n type user_t;\n type var_own_t;\n')\nallow user_t var_own_t: file{read write execute};\n")
+
             self.subLabel = Label(self.policyWin, text="Subject : ")
             self.subLabel.grid(row=0, column=0, padx=(10, 10), pady=(8, 8))
             self.subEntry = Entry(self.policyWin)

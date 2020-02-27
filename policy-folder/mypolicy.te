@@ -1,0 +1,15 @@
+
+policy_module(mypolicy,1.0)
+gen_require(`
+ type user_t;
+ type var_own_t;
+ type shell_exec_t;
+ type xdm_exec_t;
+ type mnt_t;
+ type  var_lib_t;
+')
+allow user_t var_own_t: file{open read write};
+allow user_t var_lib_t: file{open read};
+allow user_t shell_exec_t: process{read execute};
+neverallow user_t xdm_exec_t:process{read write execute};
+audit2allow user_t mnt_t:directory{open getattr search};
