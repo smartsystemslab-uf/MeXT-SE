@@ -131,7 +131,8 @@ class mainWindow():
         print("Adding new Module ...")
         try: 
             print("Adding New Module to " + self.sourceFrame_0.filename)
-            self.compWin = Toplevel()
+            self.sourceFrame_0.newCompFunc()
+            '''self.compWin = Toplevel()
             self.compWin.wm_title("New Component...")
             self.compNameLabel = Label(self.compWin, text="Component Name : ")
             self.compNameLabel.grid(row=0, column=0, padx=(10, 10), pady=(8, 8))
@@ -140,7 +141,7 @@ class mainWindow():
 
 
             addcompButton = Button(self.compWin, text="Add Component")
-            addcompButton.grid(row=7, column=1, padx=(10, 10), pady=(10, 10), sticky=SE)
+            addcompButton.grid(row=7, column=1, padx=(10, 10), pady=(10, 10), sticky=SE)'''
 
 
         except:
