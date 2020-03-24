@@ -76,51 +76,107 @@ class sourceFrame():
     def newCompFunc(self):
         self.compWin = Toplevel()
         self.compWin.wm_title("New Component...")
-        self.compNameLabel = Label(self.compWin, text="Component Name : ")
-        self.compNameLabel.grid(row=0, column=0, padx=(10, 10), pady=(8, 8))
+
+
+        self.ipType = StringVar(self.compWin)
+        self.ipType.set("Memory") # default value
+
+        self.w = OptionMenu(self.compWin, self.ipType, "IP", "CPU", "Memory")
+        self.w.grid(row=0, column=0, padx=(10, 10), pady=(8, 8))
+
+        self.compNameLabel = Label(self.compWin, text= "Component Name: ")
+        self.compNameLabel.grid(row=0, column=1, padx=(10, 10), pady=(8, 8))
         self.compNameEntry = Entry(self.compWin)
-        self.compNameEntry.grid(row=0, column=1, padx=(10, 10), pady=(8, 8))
+        self.compNameEntry.grid(row=0, column=2, padx=(10, 10), pady=(8, 8))
 
         self.configLabel1 = Label(self.compWin, text="Configuration 1 : ")
-        self.configLabel1.grid(row=1, column=0, padx=(2, 10), pady=(8, 0))
+        self.configLabel1.grid(row=1, column=1, padx=(2, 10), pady=(8, 0))
 
         self.valLabel1 = Label(self.compWin, text="Value : ")
-        self.valLabel1.grid(row=1, column=1, padx=(10, 10), pady=(8, 0))
+        self.valLabel1.grid(row=1, column=2, padx=(10, 10), pady=(8, 0))
 
         self.configName1 = Entry(self.compWin)
-        self.configName1.grid(row=2, column=0, padx=(10, 10), pady=(4, 4))
+        self.configName1.grid(row=2, column=1, padx=(10, 10), pady=(4, 4))
 
         self.configVal1 = Entry(self.compWin)
-        self.configVal1.grid(row=2, column=1, padx=(10, 10), pady=(4, 4))
+        self.configVal1.grid(row=2, column=2, padx=(10, 10), pady=(4, 4))
 
         self.cofigLabel2 = Label(self.compWin, text="Configuration 2 : ")
-        self.cofigLabel2.grid(row=3, column=0, padx=(2, 10), pady=(8, 0))
+        self.cofigLabel2.grid(row=3, column=1, padx=(2, 10), pady=(8, 0))
         
         self.valLabel2 = Label(self.compWin, text="Value : ")
-        self.valLabel2.grid(row=3, column=1, padx=(10, 10), pady=(8, 0))
+        self.valLabel2.grid(row=3, column=2, padx=(10, 10), pady=(8, 0))
 
         self.configName2 = Entry(self.compWin)
-        self.configName2.grid(row=4, column=0, padx=(10, 10), pady=(4, 4))
+        self.configName2.grid(row=4, column=1, padx=(10, 10), pady=(4, 4))
 
         self.configVal2 = Entry(self.compWin)
-        self.configVal2.grid(row=4, column=1, padx=(10, 10), pady=(4, 4))
+        self.configVal2.grid(row=4, column=2, padx=(10, 10), pady=(4, 4))
 
         self.cofigLabel3 = Label(self.compWin, text="Configuration 3 : ")
-        self.cofigLabel3.grid(row=5, column=0, padx=(2, 10), pady=(8, 0))
+        self.cofigLabel3.grid(row=5, column=1, padx=(2, 10), pady=(8, 0))
         
         self.valLabel3 = Label(self.compWin, text="Value : ")
-        self.valLabel3.grid(row=5, column=1, padx=(10, 10), pady=(8, 0))
+        self.valLabel3.grid(row=5, column=2, padx=(10, 10), pady=(8, 0))
 
         self.configName3 = Entry(self.compWin)
-        self.configName3.grid(row=6, column=0, padx=(10, 10), pady=(4, 4))
+        self.configName3.grid(row=6, column=1, padx=(10, 10), pady=(4, 4))
 
         self.configVal3 = Entry(self.compWin)
-        self.configVal3.grid(row=6, column=1, padx=(10, 10), pady=(4, 4))
+        self.configVal3.grid(row=6, column=2, padx=(10, 10), pady=(4, 4))
         
         
-        addcompButton = Button(self.compWin, text="Add Component")
-        addcompButton.grid(row=7, column=1, padx=(10, 10), pady=(10, 10), sticky=SE)
+        addcompButton = Button(self.compWin, text="Add Component", command = self.writeNewCompToFile)
+        addcompButton.grid(row=7, column=2, padx=(10, 10), pady=(10, 10), sticky=SE)
 
-       
 
+
+    def writeNewCompToFile(self):
+        print("Writing component...")
+
+        file_object = open(self.filename, 'r')
+        lines = file_object.readlines()
+        #lines = lines[:-1]
+
+        while ("SystemDescription" not in lines[-1]):
+            if("<" in lines[-1]):
+                print("Error: Incorrect XML format")
+                exit(1)
+            lines = lines[:-1]
+
+        lines = lines[:-1]
+
+
+        file_object.close()
+
+        file_object = open(self.filename, 'w')
+
+        for line in lines:
+            file_object.write(line)
+
+        
+
+        writeString = "<" + self.ipType.get()
+
+        if (self.compNameEntry.get() != ""):
+            writeString = writeString + ' name="' + self.compNameEntry.get() + '" '
+        if(self.configName1.get() != "" and self.configVal1.get() != ""):
+            writeString = writeString + self.configName1.get() + '="' + self.configVal1.get() + '" '
+        if(self.configName2.get() != "" and self.configVal2.get() != ""):
+            writeString = writeString + self.configName1.get() + '="' + self.configVal1.get() + '" '
+        if(self.configName3.get() != "" and self.configVal3.get() != ""):
+            writeString = writeString + self.configName1.get() + '="' + self.configVal1.get() + '"'
+
+        file_object.write(writeString + ">\n")
+
+        file_object.write("</" + self.ipType.get() +">\n")
+        file_object.write("</SystemDescription>")
+        file_object.close()
+
+
+        self.treeData.deletePrevousEntry()
+        self.treeData.generateTree(self.filename)
+
+
+        self.compWin.destroy()
 
