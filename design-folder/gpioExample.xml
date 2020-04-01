@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<SystemDescription name="Xilinx zynq-7020">
+  <CPU task="standalone" name="zynq">
+    <CPUConfig>DDR</CPUConfig>
+  </CPU>
+  <IP name="GPIO" task="input" width="32-bit">
+  </IP>
+  <CommMedium type="bus">axi</CommMedium>
+</SystemDescription>
