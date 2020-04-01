@@ -11,10 +11,6 @@ import sys, os
 import mainWindow
 
 
-
-
-
-
 root = Tk()
 
 mainWindowObj = mainWindow.mainWindow(root)

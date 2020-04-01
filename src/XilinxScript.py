@@ -5,7 +5,12 @@
 def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath):
     print("Generating script for Xilinx FPGA")
     print(systemData)
-
+    #added for # DEBUG:
+    print(cpuConfList)
+    print(memConfList)
+    print(comConfData)
+    print(filePath)
+    
     tclFile = open(filePath[:-3] + "tcl", "w")
     projectDir = filePath.split('/')
     projectName = projectDir[-1]
@@ -24,7 +29,6 @@ def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath
     else:
         print("INFO: Unknown board file")
         exit(-1)
-
 
     gpio_index = -1
     tclFile.write("create_bd_design \"design_1\"\n")
@@ -85,7 +89,7 @@ def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath
                         tclFile.write("set_property -dict [list CONFIG.C_GPIO_WIDTH {" + widthSize + "} CONFIG.C_ALL_OUTPUTS {1}] [get_bd_cells axi_gpio_"+ str(gpio_index) +"]\n")
                         tclFile.write("apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {Auto} Clk_slave {Auto} Clk_xbar {Auto} Master {/processing_system7_0/M_AXI_GP0} Slave {/axi_gpio_"+ str(gpio_index) +"/S_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins axi_gpio_"+ str(gpio_index) +"/S_AXI]\n")
                         tclFile.write("apply_bd_automation -rule xilinx.com:bd_rule:board -config { Board_Interface {Custom} Manual_Source {Auto}}  [get_bd_intf_pins axi_gpio_"+ str(gpio_index) +"/GPIO]\n\n")
-                        
+
 
 
     tclFile.write("validate_bd_design -force\n")

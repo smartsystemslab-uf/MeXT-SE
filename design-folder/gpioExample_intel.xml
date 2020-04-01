@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<SystemDescription name="Xilinx zynq-7020">
-  <CPU task="standalone" name="zynq">
+<SystemDescription name="Intel Cyclone-V">
+  <CPU task="standalone" name="nios2">
     <CPUConfig>DDR</CPUConfig>
   </CPU>
   <IP name="GPIO" task="output" width="4-bit">
   </IP>
-  <CommMedium type="bus">axi</CommMedium>
+  <CommMedium type="bus">avalon</CommMedium>
 </SystemDescription>
-
-

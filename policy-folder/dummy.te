@@ -1,2 +1,9 @@
 #This is a dummy policy file
 
+
+policy_module(policy100, 1.0)
+gen_require(`
+type user_t;
+type obj_t;
+')
+read user_t obj_t: file{read };
