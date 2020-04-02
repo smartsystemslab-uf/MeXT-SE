@@ -191,6 +191,11 @@ set_instance_parameter_value clk_0 {clockFrequency} {50000000.0}
 set_instance_parameter_value clk_0 {clockFrequencyKnown} {1}
 set_instance_parameter_value clk_0 {resetSynchronousEdges} {NONE}
 
+add_instance himm_module_v1_0_S00_Avalon_0 himm_module_v1_0_S00_Avalon 1.0
+set_instance_parameter_value himm_module_v1_0_S00_Avalon_0 {C_S_AVALON_ADDR_WIDTH} {4}
+set_instance_parameter_value himm_module_v1_0_S00_Avalon_0 {C_S_AVALON_DATA_WIDTH} {32}
+set_instance_parameter_value himm_module_v1_0_S00_Avalon_0 {SECURE_DATA_OUT_WIDTH} {32}
+
 add_instance jtag_uart_0 altera_avalon_jtag_uart 18.1
 set_instance_parameter_value jtag_uart_0 {allowMultipleConnections} {0}
 set_instance_parameter_value jtag_uart_0 {hubInstanceID} {0}
@@ -212,6 +217,9 @@ set_interface_property gpio EXPORT_OF GPIO.external_connection
 add_interface reset reset sink
 set_interface_property reset EXPORT_OF clk_0.clk_in_reset
 
+add_interface secure_data_out conduit end
+set_interface_property secure_data_out EXPORT_OF himm_module_v1_0_S00_Avalon_0.conduit_end
+
 # connections and connection parameters
 add_connection CPU.data_master CPU.debug_mem_slave
 set_connection_parameter_value CPU.data_master/CPU.debug_mem_slave arbitrationPriority {1}
@@ -220,18 +228,23 @@ set_connection_parameter_value CPU.data_master/CPU.debug_mem_slave defaultConnec
 
 add_connection CPU.data_master GPIO.s1
 set_connection_parameter_value CPU.data_master/GPIO.s1 arbitrationPriority {1}
-set_connection_parameter_value CPU.data_master/GPIO.s1 baseAddress {0x00101000}
+set_connection_parameter_value CPU.data_master/GPIO.s1 baseAddress {0x00100840}
 set_connection_parameter_value CPU.data_master/GPIO.s1 defaultConnection {0}
 
 add_connection CPU.data_master MEMORY1.s1
 set_connection_parameter_value CPU.data_master/MEMORY1.s1 arbitrationPriority {1}
-set_connection_parameter_value CPU.data_master/MEMORY1.s1 baseAddress {0x00080000}
+set_connection_parameter_value CPU.data_master/MEMORY1.s1 baseAddress {0x00100000}
 set_connection_parameter_value CPU.data_master/MEMORY1.s1 defaultConnection {0}
 
 add_connection CPU.data_master jtag_uart_0.avalon_jtag_slave
 set_connection_parameter_value CPU.data_master/jtag_uart_0.avalon_jtag_slave arbitrationPriority {1}
-set_connection_parameter_value CPU.data_master/jtag_uart_0.avalon_jtag_slave baseAddress {0x00101010}
+set_connection_parameter_value CPU.data_master/jtag_uart_0.avalon_jtag_slave baseAddress {0x00100010}
 set_connection_parameter_value CPU.data_master/jtag_uart_0.avalon_jtag_slave defaultConnection {0}
+
+add_connection CPU.data_master himm_module_v1_0_S00_Avalon_0.s0
+set_connection_parameter_value CPU.data_master/himm_module_v1_0_S00_Avalon_0.s0 arbitrationPriority {1}
+set_connection_parameter_value CPU.data_master/himm_module_v1_0_S00_Avalon_0.s0 baseAddress {0x0000}
+set_connection_parameter_value CPU.data_master/himm_module_v1_0_S00_Avalon_0.s0 defaultConnection {0}
 
 add_connection CPU.instruction_master CPU.debug_mem_slave
 set_connection_parameter_value CPU.instruction_master/CPU.debug_mem_slave arbitrationPriority {1}
@@ -249,11 +262,13 @@ set_connection_parameter_value CPU.irq/jtag_uart_0.irq irqNumber {0}
 add_connection clk_0.clk CPU.clk
 add_connection clk_0.clk GPIO.clk
 add_connection clk_0.clk MEMORY1.clk1
+add_connection clk_0.clk himm_module_v1_0_S00_Avalon_0.clock_sink
 add_connection clk_0.clk jtag_uart_0.clk
 
 add_connection clk_0.clk_reset CPU.reset
 add_connection clk_0.clk_reset GPIO.reset
 add_connection clk_0.clk_reset MEMORY1.reset1
+add_connection clk_0.clk_reset himm_module_v1_0_S00_Avalon_0.reset_sink
 add_connection clk_0.clk_reset jtag_uart_0.reset
 # interconnect requirements
 set_interconnect_requirement {$system} {qsys_mm.clockCrossingAdapter} {HANDSHAKE}

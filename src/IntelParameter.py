@@ -202,12 +202,19 @@ JTAG_parameter = [
 
 DATA_baseAddress = [
     ["CPU.debug_mem_slave", "0x00100800"],
-    ["GPIO.s1", "0x00101000"],
-    ["MEMORY1.s1", "0x00080000"],
-    ["jtag_uart_0.avalon_jtag_slave", "0x00101010"]
+    ["GPIO.s1", "0x00100840"],              # previous value : 0x00101000
+    ["MEMORY1.s1", "0x00100000"],           # previous value : 0x00080000
+    ["jtag_uart_0.avalon_jtag_slave", "0x00100010"], # previous value : 0x00101010
+    ["himm_module_v1_0_S00_Avalon_0.s0",   "0x0000"]
 ]
 
 INSTRUCTION_baseAddress = [
     ["CPU.debug_mem_slave", "0x00100800"],
     ["MEMORY1.s1",  "0x00080000"]
+]
+
+HIMM_parameter = [
+    ["C_S_AVALON_ADDR_WIDTH",   "4"],
+    ["C_S_AVALON_DATA_WIDTH",   "32"],
+    ["SECURE_DATA_OUT_WIDTH",   "32"]
 ]

@@ -4,7 +4,7 @@
 from IntelParameter import *
 import array
 
-def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath):
+def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath, securityBit):
     print("Generating script for Intel FPGA")
     print(systemData)
     #added for # DEBUG:
@@ -83,6 +83,16 @@ def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath
     tclFile.write("\n")
     #numComponent = numComponent + 1
 
+    if (securityBit == 1):
+        himm_add = "add_instance himm_module_v1_0_S00_Avalon_0 himm_module_v1_0_S00_Avalon 1.0\n"
+        tclFile.write(himm_add)
+        numComponent = numComponent + 1
+        comp_array.append("himm_module_v1_0_S00_Avalon_0")
+        for i in range(len(HIMM_parameter)):
+            himm_add_parameter = instance + " himm_module_v1_0_S00_Avalon_0 " + "{" + HIMM_parameter[i][0] +"} " + "{" + HIMM_parameter[i][1] + "}\n"
+            tclFile.write(himm_add_parameter)
+        tclFile.write("\n")
+
     jtag_add = "add_instance jtag_uart_0 altera_avalon_jtag_uart 18.1\n"
     tclFile.write(jtag_add)
     numComponent = numComponent + 1
@@ -101,10 +111,17 @@ def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath
     tclFile.write("set_interface_property gpio EXPORT_OF GPIO.external_connection\n")
     tclFile.write("add_interface reset reset sink\n")
     tclFile.write("set_interface_property reset EXPORT_OF clk_0.clk_in_reset\n\n")
+    if (securityBit == 1):
+        tclFile.write("add_interface secure_data_out conduit end\n")
+        tclFile.write("set_interface_property secure_data_out EXPORT_OF himm_module_v1_0_S00_Avalon_0.conduit_end\n\n")
 
     #connections and connection parameters
     tclFile.write("# connections and connection parameters\n")
-    for i in range(len(DATA_baseAddress)):
+    if (securityBit == 1):
+        x = len(DATA_baseAddress)
+    else:
+        x = len(DATA_baseAddress) - 1
+    for i in range(x):
         add_connect = "add_connection CPU.data_master " + DATA_baseAddress[i][0] +"\n"
         tclFile.write(add_connect)
         for j in range(0,3):
@@ -138,6 +155,8 @@ def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath
     for i in range(numComponent):
         if(comp_array[i] == "MEMORY1"):
             add_connect = "add_connection clk_0.clk " + comp_array[i] + ".clk1\n"
+        elif (comp_array[i] == "himm_module_v1_0_S00_Avalon_0"):
+            add_connect = "add_connection clk_0.clk " + comp_array[i] + ".clock_sink\n"
         else:
             add_connect = "add_connection clk_0.clk " + comp_array[i] + ".clk\n"
         tclFile.write(add_connect)
@@ -145,6 +164,8 @@ def ScriptGeneration(systemData, cpuConfList, memConfList, comConfData, filePath
     for i in range(numComponent):
         if(comp_array[i] == "MEMORY1"):
             add_connect = "add_connection clk_0.clk_reset " + comp_array[i] + ".reset1\n"
+        elif (comp_array[i] == "himm_module_v1_0_S00_Avalon_0"):
+            add_connect = "add_connection clk_0.clk_reset " + comp_array[i] + ".reset_sink\n"
         else:
             add_connect = "add_connection clk_0.clk_reset " + comp_array[i] + ".reset\n"
         tclFile.write(add_connect)
