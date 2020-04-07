@@ -1,0 +1,20 @@
+Petalinux OS image generation guideline
+
+Prerequisite:
+1. Petalinux must be installed in the working computer.
+2. To set up the Petalinux working environment, run the following command.
+  ---> source <path-to-installed-PetaLinux>/settings.sh
+
+Steps to modify petalinux.sh file:
+1. In the petalinux.sh file, please update the < > sections.
+2. Provide the <PROJECT_NAME> of your choice.
+3. Update the directory for hardware description file (.hdf). The .hdf file is found in the Vivado project directory.
+4. The zynq fsbl image is found in the petalinux_project_directory/images/linux directory.
+5. Include the FPGA bitstream .bit file from the Vivado project directory.
+
+Guideline to run petalinux.sh file:
+1. Change the permission of petalinux.sh using chmod to execute in your system.
+2. As petalinux-config step is interactive, please provide your custom requirement of OS image and save the configuration.
+3. After running the petalinux.sh successfully, petalinux OS images will be saved in the petalinux_project_directory/images/linux directory.
+4. Use SD card to insert the OS images (BOOT.BIN and image.ub)
+5. Please follow the petalinux reference guide (available online) for any custom requirement. 
